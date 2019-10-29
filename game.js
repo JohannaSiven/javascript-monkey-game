@@ -4,13 +4,11 @@ class Game {
         this.player = new Player();
         this.grid = new Grid();
         this.star = [];
-        //this.randomStar = new Star()
     }
 
     gamePreload() {
         this.background.backgroundPreload();
         this.player.playerPreload();
-        //this.randomStar.starPreload();
     }
 
     gameSetup() {
@@ -21,19 +19,15 @@ class Game {
         this.background.backgroundDraw();
         this.player.playerDraw();
 
-        // while (this.star.length < 51) {
-        //     this.star.push(new Star());
-        // }
-
-        // console.log(this.star);
-        // console.log(this.star.length);
-
-        // this.star.forEach(
-        //     (instance) => {
-        //         console.log(instance)
-        //         instance.starDraw();
-        //     }
-        //);
+        while (this.star.length < 100) {
+            this.star.push(new Star());
+        }
+        this.star.forEach(
+            (instance) => {
+                if (!instance.img) instance.starPreload();
+                instance.starDraw();
+            }
+        );
 
         if (keyIsDown(37) && game.player.x > 0) {
             game.player.moveLeft();
@@ -77,4 +71,14 @@ class Game {
         }
         return false;
     }
+
+    // isCollision(obstacle, star) {
+    //     if (obstacle.x < star.x + star.width &&
+    //         obstacle.x + obstacle.width > star.x &&
+    //         obstacle.y < star.y + star.height &&
+    //         obstacle.y + obstacle.height > star.y) {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 }

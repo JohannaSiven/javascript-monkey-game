@@ -19,7 +19,7 @@ class Grid {
             {x:340 ,y:40, width:70, height:20},
             {x:1000-340-70 ,y:40, width:70, height:20},
             {x:310 ,y:160, width:380, height:20},
-            {x:420 ,y:280, width:160, height:50},
+            {x:420 ,y:260, width:160, height:20},
             {x:290 ,y:330, width:420, height:20},
             {x:320 ,y:450, width:30, height:80},
             {x:1000-320-30 ,y:450, width:30, height:80},
