@@ -1,35 +1,43 @@
-// p5 is not loaded yet bc this file is part of GAME initialization --> p5 functions not available
-
 class Game {
     constructor() {
         this.background = new Background();
         this.player = new Player();
         this.grid = new Grid();
+        this.star = [];
+        //this.randomStar = new Star()
     }
 
     gamePreload() {
         this.background.backgroundPreload();
         this.player.playerPreload();
+        //this.randomStar.starPreload();
     }
 
     gameSetup() {
         this.player.playerSetup();
-
-
     }
 
     gameDraw() {
-        clear()
         this.background.backgroundDraw();
         this.player.playerDraw();
-        if (keyIsDown(37) && game.player.x > 0) {
-            //game.player.direction = 'left';
-            game.player.moveLeft();
-        }
 
-        // move right
-        else if (keyIsDown(39) && game.player.x < width - game.player.width) {
-            //game.player.direction = 'right';
+        // while (this.star.length < 51) {
+        //     this.star.push(new Star());
+        // }
+
+        // console.log(this.star);
+        // console.log(this.star.length);
+
+        // this.star.forEach(
+        //     (instance) => {
+        //         console.log(instance)
+        //         instance.starDraw();
+        //     }
+        //);
+
+        if (keyIsDown(37) && game.player.x > 0) {
+            game.player.moveLeft();
+        } else if (keyIsDown(39) && game.player.x < width - game.player.width) {
             game.player.moveRight();
         }
 
@@ -41,7 +49,7 @@ class Game {
                     y: this.player.y + this.player.height
                 })) {
 
-                    // to avoid a collision when jumping
+                // to avoid a collision when jumping
                 if (this.player.velocity > 0) {
                     // when collision is on the top pane of an obstacle
                     this.player.currentY = obstacle.y - this.player.height;
@@ -53,8 +61,8 @@ class Game {
                 this.player.velocity = 0
                 console.log("hit")
             }
-
         })
+
         if (!onTop) {
             this.player.currentY = null
         }
@@ -65,7 +73,6 @@ class Game {
             obstacle.x + obstacle.width > player.x &&
             obstacle.y < player.y + player.height &&
             obstacle.y + obstacle.height > player.y) {
-
             return true;
         }
         return false;

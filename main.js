@@ -5,7 +5,7 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(1000, 1000);
+    createCanvas(1000, 800);
     game.gameSetup();
 }
 
@@ -14,8 +14,6 @@ function draw() {
 }
 
 function keyPressed() {
-
-    // jump
     if (keyCode === 32) {
         game.player.playerJump();
     }
