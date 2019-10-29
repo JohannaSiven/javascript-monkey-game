@@ -8,8 +8,6 @@ class Star {
 
     starPreload() {
         this.img = loadImage("images/coins/coin1.png");
-        console.log("STAR preloaded")
-        console.log(this);
     }
 
     starDraw() {

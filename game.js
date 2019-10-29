@@ -29,6 +29,8 @@ class Game {
             }
         );
 
+        // console.log(width, ' ', width - game.player.width)
+
         if (keyIsDown(37) && game.player.x > 0) {
             game.player.moveLeft();
         } else if (keyIsDown(39) && game.player.x < width - game.player.width) {
@@ -51,14 +53,12 @@ class Game {
                 onTop = true;
             }
             if (this.isCollision(obstacle, this.player)) {
-                //this.player.velocity;
-                this.player.velocity = 0
-                console.log("hit")
+                this.player.velocity = 0;
+                console.log("hit");
             }
         })
-
         if (!onTop) {
-            this.player.currentY = null
+            this.player.currentY = null;
         }
     }
 
