@@ -4,12 +4,11 @@ class Star {
         this.y = Math.floor(Math.random(0, 800 - this.height) * 1000);
         this.width = 20;
         this.height = 20;
-        this.collected = false;
         this.collector = null;
     }
 
     starPreload() {
-        this.img = loadImage("images/coins/coin1.png");
+        this.img = loadImage("images/starcoin.png");
     }
 
     starDraw() {

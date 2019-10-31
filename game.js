@@ -19,10 +19,8 @@ class Game {
     }
 
     gameDraw() {
-        // draw background
         this.background.backgroundDraw();
 
-        // draw stars
         while (this.starArr.length < 100) {
             this.starArr.push(new Star());
         }
@@ -36,18 +34,13 @@ class Game {
                     }
                 })
                 if (game.starCollected(star) == "player1") {
-                    star.collected = true;
                     star.collector = 'player1';
-                    console.log(star.collected, star.collector, game.starArr)
                 } else if (game.starCollected(star) == "player2") {
-                    star.collected = true;
                     star.collector = 'player2';
-                    console.log(star.collected, star.collector, game.starArr)
                 }
             }
         );
 
-        // draw player1
         this.player1.playerDraw();
         let onTop = false;
         this.grid.obstacles.forEach((obstacle) => {
@@ -65,7 +58,6 @@ class Game {
             }
             if (this.isObstaclePlayerCollision(obstacle, this.player1)) {
                 this.player1.velocity = 0;
-                //console.log("hit");
             }
         })
         if (!onTop) {
@@ -77,47 +69,76 @@ class Game {
             game.player1.moveRight();
         }
 
-        // draw player2
         this.player2.playerDraw();
         //this.player2.x = width - (this.player2.width * 0.5);
+
         let onTop2 = false;
         this.grid.obstacles.forEach((obstacle) => {
             this.grid.gridDraw();
-            if (this.isObstaclePlayerCollision(obstacle, {
-                    ...this.player2,
-                    y: this.player2.y + this.player2.height,
-                })) {
+            if (this.isObstaclePlayerCollision(obstacle, this.player2)) {
                 //to avoid a collision when jumping
                 if (this.player2.velocity > 0) {
                     // when collision is on the top pane of an obstacle
-                    this.player2.currentY = obstacle.y - this.player2.height;
+                    if (this.player2.y < obstacle.y) {
+                        this.player2.currentY = obstacle.y - this.player2.height;
+                        onTop2 = true;
+                    }
                 }
-                onTop2 = true;
             }
             if (this.isObstaclePlayerCollision(obstacle, this.player2)) {
                 this.player2.velocity = 0;
-                //console.log("hit");
             }
         })
         if (!onTop2) {
             this.player2.currentY = null;
         }
+
+
         if (keyIsDown(37) && game.player2.x > game.player2.width / 3) {
             game.player2.moveLeft();
         } else if (keyIsDown(39) && game.player2.x < width - game.player2.width / 3) {
             game.player2.moveRight();
         }
 
+        this.player1Score = (game.starArr.filter(function (star) {
+            return star.collector == "player1"
+        })).length;
+        this.player2Score = (game.starArr.filter(function (star) {
+            return star.collector == "player2"
+        })).length;
+
+        let player1Scores = document.querySelector('.player1gamescore');
+        player1Scores.innerText = this.player1Score;
+        let player2Scores = document.querySelector('.player2gamescore');
+        player2Scores.innerText = this.player2Score;
     }
 
     isObstaclePlayerCollision(obstacle, player1) {
-        if (obstacle.x < player1.x &&
-            obstacle.x + obstacle.width > player1.x &&
-            obstacle.y < player1.y + player1.height &&
-            obstacle.y + obstacle.height > player1.y) {
-            return true;
+        if (player1.y > obstacle.y + obstacle.height ||
+            obstacle.y > player1.y + player1.height
+        ) {
+            return false;
         }
-        return false;
+
+        if (player1.x > obstacle.x + obstacle.width ||
+            player1.x + player1.width < obstacle.x
+        ) {
+            return false
+        }
+
+
+        // if (player1.x < obstacle.x + obstacle.width &&
+        //     player1.x + player1.width > obstacle.x) {
+
+        //     if (Math.abs((player1.x + player1.width) - obstacle.x) > Math.abs(player1.x - obstacle.x + obstacle.width)) {
+        //         return 'left'
+        //     } else return 'right'
+        // }
+
+        // //         return "right";
+        // //     return "left";
+
+        return true;
     }
 
     isObstacleStarCollision(obstacle, star) {

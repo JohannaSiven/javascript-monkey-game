@@ -39,31 +39,35 @@ class Player {
     }
 
     playerSetup() {
-        this.y = height - this.img.height / 2;
-        this.width = this.img.width;
-        this.height = this.img.height / 2;
+        this.y = height - this.img.height
+        //  / 2
+        this.width = this.img.width / 2;
+        this.height = this.img.height
+        //  / 2;
         this.defaultY = this.y;
     }
 
     playerDraw() {
         switch (this.direction) {
             case 'down':
-                animation(playerDown, this.x, this.y)
+                animation(playerDown, this.x + this.width / 2, this.y + this.height / 2)
                 playerDown.frameDelay = 10;
                 break;
             case 'left':
-                animation(playerLeft, this.x, this.y)
+                animation(playerLeft, this.x + this.width / 2, this.y + this.height / 2)
                 playerLeft.frameDelay = 10;
                 break;
             case 'right':
-                animation(playerRight, this.x, this.y)
+                animation(playerRight, this.x + this.width / 2, this.y + this.height / 2)
                 playerRight.frameDelay = 10;
                 break;
             case 'up':
-                animation(playerUp, this.x, this.y)
+                animation(playerUp, this.x + this.width / 2, this.y + this.height / 2)
                 playerUp.frameDelay = 10;
                 break;
         }
+        noFill()
+        rect(this.x, this.y, this.width, this.height)
 
         if (this.currentY) {
             this.y = this.currentY;
@@ -78,7 +82,6 @@ class Player {
             this.y = this.defaultY;
             this.jumpCount = 0;
         }
-        this.movement = false;
         this.direction = 'down';
     }
 
@@ -88,19 +91,16 @@ class Player {
             this.jumpCount++;
             this.currentY = null;
         }
-        this.movement = true;
         this.direction = 'up';
     }
 
     moveLeft() {
         this.x -= 5;
         this.direction = 'left';
-        this.movement = true;
     }
 
     moveRight() {
         this.x += 5;
         this.direction = 'right';
-        this.movement = true
     }
 }

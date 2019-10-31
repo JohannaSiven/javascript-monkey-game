@@ -1,24 +1,34 @@
-// window.onload = function() {
-//     const h1 = document.createElement("h1");
-//     document.body.appendChild(h1);
-  
-//     let counter = 10;
-//     h1.innerText = counter;
-//     h1.style.textAlign = "center";
-  
-//     const interval = setInterval(function() {
-//       counter--;
-  
-  
-//       if (counter <= -1) {
-//         // end game
-//         // compare points
-//         // print out winner
-//       }
-//     }, 1000);
-//   };
+let playing = false;
+console.log(playing);
 
+function startGame() {
+    playing = true;
+    document.querySelector("button").style.visibility = "hidden";
+    console.log(playing);
+    let counter = 120;
+    timer = document.querySelector('.timer');
+    timer.innerText = counter;
 
+    const interval = setInterval(function () {
+        counter--;
+        if (counter <= 0) {
+            clearInterval(interval);
+            playing = false;
+            setTimeout(function(){ window.location.reload() }, 5000);
+            document.querySelector("button").style.visibility = "visible";
+            console.log(playing);
+            console.log('game over')
+            if (game.player1Score > game.player2Score) {
+                console.log("player1 wins")
+            } else if (game.player2Score > game.player1Score) {
+                console.log("player1 wins")
+            } else {
+                console.log("draw")
+            }
+        }
+        timer.innerText = counter;
+    }, 1000);
+}
 const game = new Game();
 
 function preload() {
@@ -32,7 +42,8 @@ function setup() {
 }
 
 function draw() {
-    game.gameDraw();
+
+    playing && game.gameDraw();
 }
 
 function keyPressed() {
@@ -42,13 +53,3 @@ function keyPressed() {
         game.player1.playerJump();
     }
 }
-
-// let player1Gamescore = document.querySelector('.player1Gamescore');
-// let playerPoints = 0;
-// player1Gamescore.innerText = playerPoints;
-
-// let scoreContainer = document.querySelector('.score-container');
-
-// let player2Gamescore = document.querySelector('.player2Gamescore');
-// let player2Score = 0;
-// player2Gamescore.innerText = player2Score;
