@@ -6,11 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Game</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Teko&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
     <script src="p5.play-master/lib/p5.play.js"></script>
 </head>
 
 <body>
+    <h1>Game title here</h1>
+    <p class="instructions">
+        Win by having more stars collected when the time runs out!
+    </p>
+    <div class="score-container">
+        <p>Player 1 score: <span class="player1gamescore">0</span></p>
+        <p>Player 2 score: <span class="player2gamescore">0</span></p>
+
+    </div>
+    <section class="main">
+        <article class="keys">
+            <h3>Player 1 keys</h3>
+            <ul>
+                <li>press <span>A</span> to move left</li>
+                <li>press <span>D</span> to move right</li>
+                <li>press <span>shift</span> to jump</li>
+            </ul>
+        </article>
+        <div id="canvas"></div>
+        <article class="keys">
+            <h3>Player 2 keys</h3>
+            <ul>
+                <li>press <span>left arrow</span> to move left</li>
+                <li>press <span>right arrow</span> to move right</li>
+                <li>press <span>spacebar</span> to jump</li>
+            </ul>
+        </article>
+    </section>
+
     <script src="grid.js"></script>
     <script src="stars.js"></script>
     <script src="player.js"></script>

@@ -24,8 +24,6 @@ class Grid {
             {x:320 ,y:450, width:30, height:80},
             {x:1000-320-30 ,y:450, width:30, height:80},
             {x:485 ,y:450, width:30, height:80},
-            {x:200 ,y:720, width:20, height:40},
-            {x:1000-200-20 ,y:720, width:20, height:40},
             {x:200 ,y:740, width:600, height:20},
             {x:420 ,y:660, width:160, height:20},
             {x:0 ,y:720, width:70, height:20},

@@ -10,12 +10,11 @@ class Player {
         this.gravity = 0.1;
         this.jumpCount = 0;
         this.direction = 'down';
-        //this.movement = false;
     }
 
     playerPreload() {
         this.img = loadImage("images/player1/player1-right1.png")
-        this.x = 10;
+        this.x = 20;
 
         playerDown = loadAnimation(
             "images/player1/player1-front1.png",
@@ -40,33 +39,29 @@ class Player {
     }
 
     playerSetup() {
-        this.y = height - this.img.height/2;
+        this.y = height - this.img.height / 2;
         this.width = this.img.width;
-        this.height = this.img.height/2;
+        this.height = this.img.height / 2;
         this.defaultY = this.y;
     }
-   
+
     playerDraw() {
         switch (this.direction) {
             case 'down':
-                // console.log("down")
                 animation(playerDown, this.x, this.y)
-                playerDown.frameDelay = 7;
+                playerDown.frameDelay = 10;
                 break;
             case 'left':
-                // console.log("left")
                 animation(playerLeft, this.x, this.y)
-                playerLeft.frameDelay = 7;
+                playerLeft.frameDelay = 10;
                 break;
             case 'right':
-                // console.log("right")
                 animation(playerRight, this.x, this.y)
-                playerRight.frameDelay = 7;
+                playerRight.frameDelay = 10;
                 break;
             case 'up':
-                //console.log("up")
                 animation(playerUp, this.x, this.y)
-                playerUp.frameDelay = 7;
+                playerUp.frameDelay = 10;
                 break;
         }
 
@@ -86,9 +81,10 @@ class Player {
         this.movement = false;
         this.direction = 'down';
     }
+
     playerJump() {
         if (this.jumpCount < 2) {
-            this.velocity = -8;
+            this.velocity = -7;
             this.jumpCount++;
             this.currentY = null;
         }
