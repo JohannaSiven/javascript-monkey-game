@@ -45,33 +45,25 @@ class Game {
         let onTop = false;
         this.grid.obstacles.forEach((obstacle) => {
             this.grid.gridDraw();
-            if (this.isObstaclePlayerCollision(obstacle, {
-                    ...this.player1,
-                    y: this.player1.y + this.player1.height,
-                })) {
+            if (this.isObstaclePlayerCollision(obstacle, this.player1)) {
                 //to avoid a collision when jumping
                 if (this.player1.velocity > 0) {
                     // when collision is on the top pane of an obstacle
-                    this.player1.currentY = obstacle.y - this.player1.height;
+                    if (this.player1.y < obstacle.y) {
+                        this.player1.currentY = obstacle.y - this.player1.height;
+                        onTop = true;
+                    }
                 }
-                onTop = true;
             }
             if (this.isObstaclePlayerCollision(obstacle, this.player1)) {
-                this.player1.velocity = 0;
+                this.player1.velocity = (1 + this.player1.velocity) % 10;
             }
         })
         if (!onTop) {
             this.player1.currentY = null;
         }
-        if (keyIsDown(65) && game.player1.x > game.player1.width / 3) {
-            game.player1.moveLeft();
-        } else if (keyIsDown(68) && game.player1.x < width - game.player1.width / 3) {
-            game.player1.moveRight();
-        }
 
         this.player2.playerDraw();
-        //this.player2.x = width - (this.player2.width * 0.5);
-
         let onTop2 = false;
         this.grid.obstacles.forEach((obstacle) => {
             this.grid.gridDraw();
@@ -86,19 +78,58 @@ class Game {
                 }
             }
             if (this.isObstaclePlayerCollision(obstacle, this.player2)) {
-                this.player2.velocity = 0;
+                this.player2.velocity = (1 + this.player2.velocity) % 10;
             }
         })
         if (!onTop2) {
             this.player2.currentY = null;
         }
 
+        const collidingObstacles = this.grid.obstacles.filter(obstacle =>
+            this.isObstaclePlayerCollision(obstacle, this.player2)
+        ).length;
 
         if (keyIsDown(37) && game.player2.x > game.player2.width / 3) {
-            game.player2.moveLeft();
-        } else if (keyIsDown(39) && game.player2.x < width - game.player2.width / 3) {
-            game.player2.moveRight();
+            if (
+                (game.player2.jumpCount === 0 && collidingObstacles < 2) ||
+                collidingObstacles === 0
+            ) {
+                game.player2.moveLeft();
+            }
+        } else if (
+            keyIsDown(39) && game.player2.x < width - game.player2.width
+        ) {
+            if (
+                (game.player2.jumpCount === 0 && collidingObstacles < 2) ||
+                collidingObstacles === 0
+            ) {
+                game.player2.moveRight();
+            }
         }
+
+        const collidingObstacles2 = this.grid.obstacles.filter(obstacle =>
+            this.isObstaclePlayerCollision(obstacle, this.player1)
+        ).length;
+
+        if (keyIsDown(65) && game.player1.x > game.player1.width / 3) {
+            if (
+                (game.player1.jumpCount === 0 && collidingObstacles2 < 2) ||
+                collidingObstacles2 === 0
+            ) {
+                game.player1.moveLeft();
+            }
+        } else if (
+            keyIsDown(68) && game.player1.x < width - game.player1.width
+        ) {
+            if (
+                (game.player1.jumpCount === 0 && collidingObstacles2 < 2) ||
+                collidingObstacles2 === 0
+            ) {
+                game.player1.moveRight();
+            }
+        }
+
+
 
         this.player1Score = (game.starArr.filter(function (star) {
             return star.collector == "player1"
@@ -114,39 +145,18 @@ class Game {
     }
 
     isObstaclePlayerCollision(obstacle, player1) {
-        if (player1.y > obstacle.y + obstacle.height ||
-            obstacle.y > player1.y + player1.height
-        ) {
-            return false;
+
+        if (player1.x + player1.width > obstacle.x && player1.x < obstacle.x + obstacle.width &&
+            player1.y <= obstacle.y + obstacle.height && player1.y + player1.height >= obstacle.y) {
+            return true
         }
-
-        if (player1.x > obstacle.x + obstacle.width ||
-            player1.x + player1.width < obstacle.x
-        ) {
-            return false
-        }
-
-
-        // if (player1.x < obstacle.x + obstacle.width &&
-        //     player1.x + player1.width > obstacle.x) {
-
-        //     if (Math.abs((player1.x + player1.width) - obstacle.x) > Math.abs(player1.x - obstacle.x + obstacle.width)) {
-        //         return 'left'
-        //     } else return 'right'
-        // }
-
-        // //         return "right";
-        // //     return "left";
-
-        return true;
+        return false;
     }
 
     isObstacleStarCollision(obstacle, star) {
-        if (obstacle.x <= star.x &&
-            obstacle.x + obstacle.width >= star.x &&
-            obstacle.y <= star.y + star.height &&
-            obstacle.y + obstacle.height >= star.y) {
-            return true;
+        if (star.x + star.width > obstacle.x && star.x < obstacle.x + obstacle.width &&
+            star.y < obstacle.y + obstacle.height && star.y + star.height > obstacle.y) {
+            return true
         }
         if (star.x + star.width > width || star.y + star.height > height) {
             return true;
@@ -158,12 +168,12 @@ class Game {
         if (
             this.player1.x + (this.player1.width * 0.5) >= star.x &&
             this.player1.x <= (star.x + star.width) &&
-            this.player1.y + (this.player1.height * 0.5) >= star.y && this.player1.y <= (star.y + star.height)) {
+            this.player1.y + (this.player1.height) >= star.y && this.player1.y <= (star.y + star.height)) {
             return "player1";
         } else if (
             this.player2.x + (this.player2.width * 0.5) >= star.x &&
             this.player2.x <= (star.x + star.width) &&
-            this.player2.y + (this.player2.height * 0.5) >= star.y && this.player2.y <= (star.y + star.height)) {
+            this.player2.y + (this.player2.height) >= star.y && this.player2.y <= (star.y + star.height)) {
             return "player2";
         }
     }

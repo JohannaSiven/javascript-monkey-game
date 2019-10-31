@@ -39,11 +39,9 @@ class Player {
     }
 
     playerSetup() {
-        this.y = height - this.img.height
-        //  / 2
+        this.y = height - this.img.height;
         this.width = this.img.width / 2;
-        this.height = this.img.height
-        //  / 2;
+        this.height = this.img.height;
         this.defaultY = this.y;
     }
 
@@ -66,8 +64,6 @@ class Player {
                 playerUp.frameDelay = 10;
                 break;
         }
-        noFill()
-        rect(this.x, this.y, this.width, this.height)
 
         if (this.currentY) {
             this.y = this.currentY;

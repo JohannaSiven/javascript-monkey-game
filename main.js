@@ -1,11 +1,9 @@
 let playing = false;
-console.log(playing);
 
 function startGame() {
     playing = true;
     document.querySelector("button").style.visibility = "hidden";
-    console.log(playing);
-    let counter = 120;
+    let counter = 30;
     timer = document.querySelector('.timer');
     timer.innerText = counter;
 
@@ -14,17 +12,10 @@ function startGame() {
         if (counter <= 0) {
             clearInterval(interval);
             playing = false;
-            setTimeout(function(){ window.location.reload() }, 5000);
+            setTimeout(function () {
+                window.location.reload()
+            }, 5000);
             document.querySelector("button").style.visibility = "visible";
-            console.log(playing);
-            console.log('game over')
-            if (game.player1Score > game.player2Score) {
-                console.log("player1 wins")
-            } else if (game.player2Score > game.player1Score) {
-                console.log("player1 wins")
-            } else {
-                console.log("draw")
-            }
         }
         timer.innerText = counter;
     }, 1000);
@@ -42,7 +33,21 @@ function setup() {
 }
 
 function draw() {
-
+    if (!playing) {
+        if (game.player1Score > game.player2Score) {
+            textSize(35);
+            fill("white")
+            text("Game over - Player 1 wins!", 300, height / 4);
+        } else if (game.player2Score > game.player1Score) {
+            textSize(35);
+            fill("white")
+            text("Game over - Player 2 wins!", 300, height / 4);
+        } else {
+            textSize(35);
+            fill("white")
+            text("Game over - Draw", 370, 255);
+        }
+    }
     playing && game.gameDraw();
 }
 
