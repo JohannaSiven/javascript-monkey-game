@@ -25,7 +25,8 @@ class Grid {
             {x:200 ,y:720, width:600, height:20},
             {x:420 ,y:640, width:160, height:20},
             {x:0 ,y:720, width:70, height:20},
-            {x:1000-0-70 ,y:720, width:70, height:20}
+            {x:1000-0-70 ,y:720, width:70, height:20},
+            {x:0 ,y:-35, width:1000, height:20}
         ]
     }
 

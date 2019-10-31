@@ -1,8 +1,8 @@
 class Game {
     constructor() {
         this.background = new Background();
-        this.player1 = new Player();
-        this.player2 = new Player();
+        this.player1 = new Player(20);
+        this.player2 = new Player(960);
         this.grid = new Grid();
         this.starArr = [];
     }
@@ -49,7 +49,7 @@ class Game {
                 //to avoid a collision when jumping
                 if (this.player1.velocity > 0) {
                     // when collision is on the top pane of an obstacle
-                    if (this.player1.y < obstacle.y) {
+                    if (this.player1.y < obstacle.y - 30) {
                         this.player1.currentY = obstacle.y - this.player1.height;
                         onTop = true;
                     }
@@ -71,7 +71,7 @@ class Game {
                 //to avoid a collision when jumping
                 if (this.player2.velocity > 0) {
                     // when collision is on the top pane of an obstacle
-                    if (this.player2.y < obstacle.y) {
+                    if (this.player2.y < obstacle.y - 30) {
                         this.player2.currentY = obstacle.y - this.player2.height;
                         onTop2 = true;
                     }
@@ -129,8 +129,6 @@ class Game {
             }
         }
 
-
-
         this.player1Score = (game.starArr.filter(function (star) {
             return star.collector == "player1"
         })).length;
@@ -145,7 +143,6 @@ class Game {
     }
 
     isObstaclePlayerCollision(obstacle, player1) {
-
         if (player1.x + player1.width > obstacle.x && player1.x < obstacle.x + obstacle.width &&
             player1.y <= obstacle.y + obstacle.height && player1.y + player1.height >= obstacle.y) {
             return true

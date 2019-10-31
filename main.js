@@ -34,18 +34,21 @@ function setup() {
 
 function draw() {
     if (!playing) {
+        if (!game.player1Score && !game.player2Score) {
+            return;
+        }
         if (game.player1Score > game.player2Score) {
             textSize(35);
             fill("white")
-            text("Game over - Player 1 wins!", 300, height / 4);
+            text("Game over - Player 1 wins!", 300, 350);
         } else if (game.player2Score > game.player1Score) {
             textSize(35);
             fill("white")
-            text("Game over - Player 2 wins!", 300, height / 4);
+            text("Game over - Player 2 wins!", 300, 350);
         } else {
             textSize(35);
             fill("white")
-            text("Game over - Draw", 370, 255);
+            text("Game over - Draw", 370, 350);
         }
     }
     playing && game.gameDraw();
@@ -57,4 +60,5 @@ function keyPressed() {
     } else if (keyCode == 16) {
         game.player1.playerJump();
     }
+    return false;
 }

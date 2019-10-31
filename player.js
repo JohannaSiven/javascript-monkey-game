@@ -4,8 +4,8 @@ let playerLeft;
 let playerRight;
 
 class Player {
-    constructor() {
-        this.x = 0;
+    constructor(x) {
+        this.x = x;
         this.velocity = 0;
         this.gravity = 0.1;
         this.jumpCount = 0;
@@ -14,7 +14,6 @@ class Player {
 
     playerPreload() {
         this.img = loadImage("images/player1/player1-right1.png")
-        this.x = 20;
 
         playerDown = loadAnimation(
             "images/player1/player1-front1.png",
